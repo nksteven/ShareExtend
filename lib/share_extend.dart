@@ -24,7 +24,7 @@ class ShareExtend {
   /// [subject] Intent.EXTRA_SUBJECT on Android and "subject" on iOS.
   /// [extraText] only supports android for Intent.EXTRA_TEXT when sharing image or file.
   ///
-  static Future<void> shareMultiple(List<String> list, String type,
+  static Future<String> shareMultiple(List<String> list, String type,
       {Rect sharePositionOrigin,
       String sharePanelTitle,
       String subject = "",
@@ -47,7 +47,7 @@ class ShareExtend {
   /// [subject] Intent.EXTRA_SUBJECT on Android and "subject" on iOS.
   /// [extraText] only supports android for Intent.EXTRA_TEXT when sharing image or file.
   ///
-  static Future<void> share(String text, String type,
+  static Future<String> share(String text, String type,
       {Rect sharePositionOrigin,
       String sharePanelTitle,
       String subject = "",
@@ -65,7 +65,7 @@ class ShareExtend {
     );
   }
 
-  static Future<void> _shareInner(List<String> list, String type,
+  static Future<String> _shareInner(List<String> list, String type,
       {Rect sharePositionOrigin,
       String sharePanelTitle,
       String subject,
