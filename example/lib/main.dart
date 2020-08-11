@@ -3,11 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
-
-import 'package:share_extend/share_extend.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_extend/share_extend.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,10 +33,12 @@ class _MyAppState extends State<MyApp> {
             child: Column(
               children: <Widget>[
                 RaisedButton(
-                  onPressed: () {
-                    ShareExtend.share("share text", "text",
+                  onPressed: () async {
+                    String result = await ShareExtend.share(
+                        "share text", "text",
                         sharePanelTitle: "share text title",
                         subject: "share text subject");
+                    print("select $result");
                   },
                   child: Text("share text"),
                 ),
