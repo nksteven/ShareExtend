@@ -1,4 +1,23 @@
 #import "ShareExtendPlugin.h"
+#import <LinkPresentation/LPLinkMetadata.h>
+
+@implementation ActivityStringItemSource
+- (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController {
+    return @"";
+}
+- (id)activityViewController:(UIActivityViewController *)activityViewController itemForActivityType:(UIActivityType)activityType {
+    return self.body;
+}
+- (NSString *)activityViewController:(UIActivityViewController *)activityViewController subjectForActivityType:(nullable UIActivityType)activityType {
+    return self.subject;
+}
+- (nullable LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController  API_AVAILABLE(ios(13.0)) {
+    LPLinkMetadata* data = [[LPLinkMetadata alloc]init];
+    data.title = self.subject;
+    return data;
+}
+
+@end
 
 @implementation ShareExtendPlugin {
     FlutterResult _methodResult;
@@ -63,6 +82,12 @@
         _methodResult = result;
 
         if ([shareType isEqualToString:@"text"]) {
+            if (@available(iOS 13.0,*)) {
+                ActivityStringItemSource* itemSource = [[ActivityStringItemSource alloc]init];
+                itemSource.body = array.firstObject;
+                itemSource.subject = (subject != nil && subject.length > 0) ? subject : @"";
+                array = @[itemSource];
+            }
             [self share:array atSource:originRect withSubject:subject];
         }  else if ([shareType isEqualToString:@"image"]) {
             NSMutableArray * imageArray = [[NSMutableArray alloc] init];
